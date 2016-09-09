@@ -36,7 +36,7 @@ public class PermissionUtils {
         for (Method method : methods) {
              /*
              * 判断方法中是否有指定注解类型的注解
-             */
+                    */
             boolean hasAnnotation = method.isAnnotationPresent(TestA.class);
             if(hasAnnotation){
                 TestA annotation = method.getAnnotation(TestA.class);
