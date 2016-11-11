@@ -3,6 +3,8 @@ package com.efly.permissionlib;
 
 import android.Manifest;
 
+import com.ccj.ioc.annotation.NeedPermission;
+
 /**
  * Created by Administrator on 2016/8/15.
  */

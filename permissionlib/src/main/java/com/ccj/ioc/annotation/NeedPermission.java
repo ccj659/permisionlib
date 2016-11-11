@@ -1,4 +1,4 @@
-package com.efly.permissionlib;
+package com.ccj.ioc.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
