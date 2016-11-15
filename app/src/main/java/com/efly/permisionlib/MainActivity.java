@@ -16,8 +16,7 @@ import android.widget.Toast;
 
 import com.ccj.ioc.annotation.NeedPermission;
 import com.ccj.ioc.annotation.RequestPermission;
-import com.ccj.ioc.utils.PermissionInjectUtils;
-
+//http://fernandocejas.com/2014/08/03/aspect-oriented-programming-in-android/
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
     Button button;
     public static final int REQUEST_PERMISSION = 1;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //1.注册工具类
-        PermissionInjectUtils.inject(this);
+        //PermissionInjectUtils.inject(this);
 
         button= (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
