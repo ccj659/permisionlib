@@ -107,6 +107,7 @@ public class PermissionEvent {
             }
         }
 
+
         if (requestMethod != null) {
 
             //调用activity中 使用注解RequestPermission的方法.
