@@ -49,9 +49,13 @@ public class PermissionEvent {
     public void needPermissionAspectEvent(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         NeedPermission needPermission = methodSignature.getMethod().getAnnotation(NeedPermission.class);
-        String[] value = needPermission.eventName();
+        String[] value = needPermission.value();
+        for (int i = 0; i <value.length ; i++) {
+            Log.i(TAG,"value="+value[i]);
+        }
 
         ArrayList<String> strings = new ArrayList<>();
+        ArrayList<String> stringsMsg = new ArrayList<>();
         Context context = (Context) joinPoint.getTarget();
 
         //判断是否有权限没有申请通过
@@ -60,20 +64,21 @@ public class PermissionEvent {
         for (String permission : value) {
             if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                 flag = true;
-                strings.add(setCallPermissionMsg(context,permission));
+                stringsMsg.add(setCallPermissionMsg(context,permission));
+                strings.add(permission);
+                Log.i(TAG,"needed value="+permission);
                 break;
             }
         }
 
 
        if (flag == false) {
-
             joinPoint.proceed();
         } else {
-           //strings.add(value[0]);
            String[] values = new String[strings.size()];
            strings.toArray(values);
-           callRequestPermission(context, strings.toString(), values);
+           Log.i(TAG,"strings="+strings.toString()+",values="+values);
+           callRequestPermission(context, stringsMsg.toString(), value);
         }
     }
 
@@ -82,7 +87,7 @@ public class PermissionEvent {
     /**
      *
      * @param context 上下文
-     * @param message 请求权限的信息
+     * @param message 请求权限的信息,
      * @param permissions 所需的权限
      */
     private void callRequestPermission(Context context, String message, String[] permissions) {
@@ -193,6 +198,65 @@ public class PermissionEvent {
         }
         return permissions;
     }
+
+
+  /*  @Pointcut("execution(@CheckSelfPermission public * *..*.*(..)) && @annotation(name)")
+    public void checkSelfPermissionAspect(NeedPermission name) {
+
+    }
+
+    @Around("checkSelfPermissionAspect(CheckSelfPermission)")
+    public void checkSelfPermissionAspectEvent(ProceedingJoinPoint joinPoint) throws Throwable {
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        CheckSelfPermission needPermission = methodSignature.getMethod().getAnnotation(CheckSelfPermission.class);
+        String[] value = needPermission.value();
+        for (int i = 0; i <value.length ; i++) {
+            Log.i(TAG,"value="+value[i]);
+        }
+
+        ArrayList<String> strings = new ArrayList<>();
+        ArrayList<String> stringsMsg = new ArrayList<>();
+        Context context = (Context) joinPoint.getTarget();
+
+        //判断是否有权限没有申请通过
+        boolean flag = false;
+        //检查权限是否存在
+        for (String permission : value) {
+            if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                flag = true;
+                stringsMsg.add(setCallPermissionMsg(context,permission));
+                strings.add(permission);
+                Log.i(TAG,"needed value="+permission);
+                break;
+            }
+        }
+
+
+        if (flag == false) {
+
+            joinPoint.proceed();
+        } else {
+            //strings.add(value[0]);
+            String[] values = new String[strings.size()];
+            strings.toArray(values);
+            callRequestPermission(context, stringsMsg.toString(), values);
+        }
+    }
+
+
+
+
+    private void TypePermissionEvent(){
+
+
+
+
+
+    }
+
+*/
+
+
 
 
 }

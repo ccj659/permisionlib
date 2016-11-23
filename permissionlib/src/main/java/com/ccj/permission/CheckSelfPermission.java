@@ -6,12 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by ccj on 2016/11/15.
+ * Created by Administrator on 2016/11/23.
+ * 方法本身会涉及到的权限
  */
-
-@Target({ElementType.METHOD,ElementType.TYPE})
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NeedPermission {
+
+public @interface CheckSelfPermission {
     String[] value();
 
 }
